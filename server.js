@@ -41,22 +41,11 @@ app.get("/", (req, res) => {
   res.render("index", { title: "POST Home" });
 });
 
-// app.get("/", async (req, res) => {
-//   const post = await Post.find({});
-//   try {
-//     res.render("index", { title: "CRUD Home", posts: post });
-//   } catch (error) {
-//     //res.status(500);
-//     console.log(error);
-//   }
-// });
-
 app.post("/", (req, res) => {
   var name = req.body.post_title;
   var time = Number(req.body.reading_time);
   var body = req.body.post_text;
-  //console.log(typeof time);
-  //res.end();
+
   const post = new Post({
     post_name: name,
     post_time: time,
@@ -65,15 +54,30 @@ app.post("/", (req, res) => {
   post
     .save()
     .then(() => {
-      res.status(201).redirect("/");
+      res.status(201).redirect("/post");
+      //res.end();
       console.log("success");
     })
     .catch(error => {
       res.status(400).json({ error: error });
     });
 });
-app.get("/single", (req, res) => {
-  res.render("single", { title: "Single view" });
+app.get("/post", async (req, res) => {
+  const post = await Post.find({});
+  try {
+    res.render("post", { title: "Post", posts: post });
+  } catch (error) {
+    console.log(error);
+  }
+});
+app.get("/post/:id", async (req, res) => {
+  var singlePost = await Post.findById(req.params.id);
+  try {
+    //console.log(singleUser);
+    res.render("single", { title: "Single User", posts: singlePost });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // app listener

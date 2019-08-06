@@ -17,10 +17,15 @@
   <body>
     <main class="login-form">
       <div class="container">
-        <h1><%= locals.posts.post_name%></h1>
-        <h5>~ <%= locals.posts.post_time %> min</h5>
-        <p><%= locals.posts.post_body%></p>
-        <a href="/" class="btn btn-primary">Home</a>
+        <ul class="list-group">
+          <% if(posts){ %> <% locals.posts.forEach(function(post){ %>
+          <li class="list-group-item">
+            <a href="/post/<%= post._id %>"><%= post.post_name %></a>
+          </li>
+          <% })%> <%}%>
+          <!--<li class="list-group-item">Cras justo odio</li>-->
+        </ul>
+        <a style="margin-top:10px" href="/" class="btn btn-primary">Home</a>
       </div>
     </main>
   </body>
