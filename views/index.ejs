@@ -14,6 +14,9 @@
   <body>
     <main class="login-form">
       <div class="container">
+            <% if(locals.errors){ %> <% locals.errors.forEach(function(error){ %>
+                <p class="alert alert-danger"><%= error.msg%></p>
+                <% }) %> <%}%>
           <div class="row justify-content-center">
               <div class="col-md-8">
                   <div class="card">
@@ -51,6 +54,6 @@
   
   </main>
   
-  <script>src="js/main.js"</script>
+  <script src="/js/main.js" ></script>
   </body>
 </html>
