@@ -65,15 +65,15 @@ app.post("/", (req, res) => {
       post_time: time,
       post_body: body
     });
-    post
-      .save()
-      .then(() => {
-        res.status(201).redirect("/post");
-        console.log("success");
-      })
-      .catch(error => {
-        res.status(400).json({ error: error });
-      });
+    post.save((error, data) => {
+      if (error) {
+        return res.status(400).json({ error: error });
+      }
+      //res.status(200).redirect("/post");
+      //res.status(200).send(data);
+      res.render("single", { title: "Single User", posts: data });
+      console.log("success");
+    });
   }
 });
 app.get("/post", async (req, res) => {
